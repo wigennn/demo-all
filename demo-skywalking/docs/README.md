@@ -1,0 +1,2 @@
+- agent 目录复制至项目，修改config文件
+- 启动参数 -javaagent:***\skywalking-agent.jar
