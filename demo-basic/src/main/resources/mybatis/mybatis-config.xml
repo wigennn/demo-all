@@ -7,12 +7,12 @@
     <!--mysql connection jar location path-->
     <classPathEntry location="G:\mvn_repository\mysql\mysql-connector-java\8.0.22\mysql-connector-java-8.0.22.jar"/>
 
-    <context id="testTables" targetRuntime="MyBatis3">
+    <context id="testTables" targetRuntime="MyBatis3" defaultModelType="flat">
         <commentGenerator>
-            <property name="suppressAllComments" value="false"/>
+            <property name="suppressAllComments" value="true"/>
         </commentGenerator>
         <!--connection config-->
-        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+        <jdbcConnection driverClass="com.mysql.cj.jdbc.Driver"
                         connectionURL="jdbc:mysql://localhost:3306/test?serverTimezone=GMT"
                         userId="root"
                         password="root"/>
@@ -25,6 +25,7 @@
                             targetProject="src/main/java">
             <property name="enableSubPackages" value="false"/>
             <property name="trimString" value="true"/>
+            <property name="nullCatalogMeansCurrent" value="true"/>
         </javaModelGenerator>
 
         <!--xml mapper path-->
@@ -44,6 +45,7 @@
                enableCountByExample="false" enableSelectByExample="false"
                enableDeleteByExample="false" enableUpdateByExample="false"
                enableInsert="false" enableUpdateByPrimaryKey="false"
-               enableSelectByPrimaryKey="true" enableDeleteByPrimaryKey="false"/>
+               enableSelectByPrimaryKey="false" enableDeleteByPrimaryKey="false"
+               selectByPrimaryKeyQueryId="false" selectByExampleQueryId="false"/>
     </context>
 </generatorConfiguration>
