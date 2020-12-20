@@ -1,9 +1,11 @@
 package com.redbyte.platform.demobasic.core.domain.entity;
 
+import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.Date;
 
 /**
  * <p>
@@ -12,11 +14,28 @@ import java.util.Collection;
  *
  * @author wangwq
  */
+@Data
 public class LoginUserInfo implements UserDetails {
 
     private Long id;
+
     private String userName;
+
     private String password;
+
+    private String name;
+
+    private String phone;
+
+    private Long roleId;
+
+    private Boolean isAdmin;
+
+    private Byte status;
+
+    private Date createTime;
+
+    private Date updateTime;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -25,12 +44,12 @@ public class LoginUserInfo implements UserDetails {
 
     @Override
     public String getPassword() {
-        return null;
+        return password;
     }
 
     @Override
     public String getUsername() {
-        return null;
+        return userName;
     }
 
     @Override
@@ -50,6 +69,6 @@ public class LoginUserInfo implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return false;
+        return status == 0;
     }
 }
