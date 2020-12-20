@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+    <!--mysql connection jar location path-->
+    <classPathEntry location="G:\mvn_repository\mysql\mysql-connector-java\8.0.22\mysql-connector-java-8.0.22.jar"/>
+
+    <context id="testTables" targetRuntime="MyBatis3">
+        <commentGenerator>
+            <property name="suppressAllComments" value="false"/>
+        </commentGenerator>
+        <!--connection config-->
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://localhost:3306/test?serverTimezone=GMT"
+                        userId="root"
+                        password="root"/>
+        <javaTypeResolver>
+            <property name="forceBigDecimals" value="false"/>
+        </javaTypeResolver>
+
+        <!--entity path-->
+        <javaModelGenerator targetPackage="com.redbyte.platform.demobasic.core.domain.entity"
+                            targetProject="src/main/java">
+            <property name="enableSubPackages" value="false"/>
+            <property name="trimString" value="true"/>
+        </javaModelGenerator>
+
+        <!--dao path-->
+        <javaClientGenerator type="XMLMAPPER"
+                             targetPackage="com.redbyte.platform.demobasic.core.dao"
+                             targetProject="src/main/java">
+            <property name="enableSubPackages" value="false"/>
+        </javaClientGenerator>
+
+        <!--xml mapper path-->
+        <sqlMapGenerator targetPackage="mapper"
+                         targetProject="src/main/resources">
+            <property name="enableSubPackages" value="false"/>
+        </sqlMapGenerator>
+
+        <table tableName="role" schema="test" domainObjectName="Role"
+               enableCountByExample="false" enableSelectByExample="false"
+               enableDeleteByExample="false" enableUpdateByExample="false"
+               enableInsert="false" enableUpdateByPrimaryKey="false"
+               enableSelectByPrimaryKey="false" enableDeleteByPrimaryKey="false"/>
+    </context>
+</generatorConfiguration>
