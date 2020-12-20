@@ -27,6 +27,12 @@
             <property name="trimString" value="true"/>
         </javaModelGenerator>
 
+        <!--xml mapper path-->
+        <sqlMapGenerator targetPackage="mapper"
+                         targetProject="src/main/resources">
+            <property name="enableSubPackages" value="false"/>
+        </sqlMapGenerator>
+
         <!--dao path-->
         <javaClientGenerator type="XMLMAPPER"
                              targetPackage="com.redbyte.platform.demobasic.core.dao"
@@ -34,16 +40,10 @@
             <property name="enableSubPackages" value="false"/>
         </javaClientGenerator>
 
-        <!--xml mapper path-->
-        <sqlMapGenerator targetPackage="mapper"
-                         targetProject="src/main/resources">
-            <property name="enableSubPackages" value="false"/>
-        </sqlMapGenerator>
-
-        <table tableName="role" schema="test" domainObjectName="Role"
+        <table tableName="user" domainObjectName="User"
                enableCountByExample="false" enableSelectByExample="false"
                enableDeleteByExample="false" enableUpdateByExample="false"
                enableInsert="false" enableUpdateByPrimaryKey="false"
-               enableSelectByPrimaryKey="false" enableDeleteByPrimaryKey="false"/>
+               enableSelectByPrimaryKey="true" enableDeleteByPrimaryKey="false"/>
     </context>
 </generatorConfiguration>
