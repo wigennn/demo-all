@@ -3,6 +3,7 @@ package com.redbyte.platform.demobasic.config.security;
 import com.redbyte.platform.demobasic.core.dao.UserMapper;
 import com.redbyte.platform.demobasic.core.domain.entity.LoginUserInfo;
 import com.redbyte.platform.demobasic.core.domain.entity.User;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -21,9 +22,12 @@ public class SystemUserDetailService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
         User user = userMapper.selectByUserName(s);
+        if (null == user) {
+            throw new UsernameNotFoundException(s);
+        }
 
         LoginUserInfo result = new LoginUserInfo();
-
+        BeanUtils.copyProperties(user, result);
         return result;
     }
 }

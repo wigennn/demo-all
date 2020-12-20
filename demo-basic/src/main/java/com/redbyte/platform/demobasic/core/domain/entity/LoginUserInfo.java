@@ -15,27 +15,7 @@ import java.util.Date;
  * @author wangwq
  */
 @Data
-public class LoginUserInfo implements UserDetails {
-
-    private Long id;
-
-    private String userName;
-
-    private String password;
-
-    private String name;
-
-    private String phone;
-
-    private Long roleId;
-
-    private Boolean isAdmin;
-
-    private Byte status;
-
-    private Date createTime;
-
-    private Date updateTime;
+public class LoginUserInfo extends User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -44,31 +24,31 @@ public class LoginUserInfo implements UserDetails {
 
     @Override
     public String getPassword() {
-        return password;
+        return super.getPassword();
     }
 
     @Override
     public String getUsername() {
-        return userName;
+        return super.getName();
     }
 
     @Override
     public boolean isAccountNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isEnabled() {
-        return status == 0;
+        return super.getStatus() == 0;
     }
 }

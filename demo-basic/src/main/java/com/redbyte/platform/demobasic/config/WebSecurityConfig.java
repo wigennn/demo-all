@@ -12,6 +12,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import javax.annotation.Resource;
+
 /**
  * @author wangwq
  */
@@ -19,22 +21,25 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
+    private static final BCryptPasswordEncoder ENCODER = new BCryptPasswordEncoder();
+
     @Autowired
     private SystemUserDetailService systemUserDetailService;
 
-    @Override
+/*    @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/").permitAll()
-                .anyRequest().authenticated()
-                .and()
-                .formLogin()
-                .loginPage("/login")
-                .permitAll()
-                .and()
-                .logout().logoutUrl("/logout");
-    }
+                .antMatchers("/css/**", "/js/**", "/img/**","/welcome")
+                .permitAll();
 
+        http.authorizeRequests()
+                .anyRequest()
+                .authenticated();
+
+        http.userDetailsService(systemUserDetailService);
+
+        http.authorizeRequests().and().formLogin().loginPage("/login").permitAll();
+    }*/
 
     @Override
     protected UserDetailsService userDetailsService() {
