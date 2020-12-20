@@ -26,21 +26,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private SystemUserDetailService systemUserDetailService;
 
-/*    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
-                .antMatchers("/css/**", "/js/**", "/img/**","/welcome")
-                .permitAll();
-
-        http.authorizeRequests()
-                .anyRequest()
-                .authenticated();
-
-        http.userDetailsService(systemUserDetailService);
-
-        http.authorizeRequests().and().formLogin().loginPage("/login").permitAll();
-    }*/
-
     @Override
     protected UserDetailsService userDetailsService() {
         return systemUserDetailService;
