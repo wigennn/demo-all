@@ -1,5 +1,6 @@
 package com.redbyte.platform.demowebsocket.websocket;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.StringUtils;
 
 import javax.websocket.OnClose;
@@ -18,6 +19,7 @@ import java.util.concurrent.ConcurrentHashMap;
  *
  * @author wangwq
  */
+@Slf4j
 @ServerEndpoint("/webSocket/{uid}")
 public class WebSocketServer {
 
@@ -25,10 +27,12 @@ public class WebSocketServer {
 
     private Session session;
 
+    private String uid;
+
     @OnOpen
     public void open(@PathParam("uid") String uid, Session session) {
         this.session = session;
-
+        this.uid = uid;
         if (!StringUtils.isEmpty(uid)) {
             webSocketSet.put(uid, this);
         }
@@ -36,12 +40,12 @@ public class WebSocketServer {
 
     @OnClose
     public void close() {
-
+        webSocketSet.remove(uid);
     }
 
     @OnMessage
-    public void message(String msg, Session session) {
-
+    public void message(String msg) {
+        log.info("来自客户端的消息:{}", msg);
     }
 
     public void sendMessage(String message) throws IOException {
