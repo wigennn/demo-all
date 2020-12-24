@@ -29,7 +29,7 @@ public class MessageProducerController {
     @GetMapping("/send")
     public String sendMsg() {
         MessageFormat messageFormat = new MessageFormat();
-        messageFormat.setSendId("0");
+        messageFormat.setSourceId("0");
         messageFormat.setReceiveId("1");
         messageFormat.setTitle("title");
         messageFormat.setContent("消息发送时间为:" + LocalDateTime.now());
