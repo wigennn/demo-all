@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 /**
  * <p>
@@ -33,7 +34,7 @@ public class MessageProducerController {
         messageFormat.setReceiveId("1");
         messageFormat.setTitle("title");
         messageFormat.setContent("消息发送时间为:" + LocalDateTime.now());
-        messageFormat.setSendTime(LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME));
+        messageFormat.setSendTime(new Date());
         rocketMQTemplate.convertAndSend(topic, messageFormat);
         return messageFormat.toString();
     }
