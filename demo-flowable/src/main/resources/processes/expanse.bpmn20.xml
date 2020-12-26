@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:flowable="http://flowable.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.flowable.org/processdef">
+  <process id="expanse" name="expanse" isExecutable="true">
+    <documentation>报销流程</documentation>
+    <startEvent id="sid-734E5CED-7DDA-4352-8C3F-438AFDF4CD0E" name="开始" flowable:formFieldValidation="true"></startEvent>
+    <userTask id="firstNode" name="报销单发起" flowable:assignee="${userId}" flowable:formFieldValidation="true">
+      <extensionElements>
+        <modeler:initiator-can-complete xmlns:modeler="http://flowable.org/modeler"><![CDATA[false]]></modeler:initiator-can-complete>
+      </extensionElements>
+    </userTask>
+    <sequenceFlow id="sid-0BF6A4F0-72D8-4246-AD09-66E8F9A02237" sourceRef="sid-734E5CED-7DDA-4352-8C3F-438AFDF4CD0E" targetRef="firstNode"></sequenceFlow>
+    <userTask id="secondNode" name="领导审批" flowable:assignee="${userId}" flowable:formFieldValidation="true">
+      <extensionElements>
+        <modeler:initiator-can-complete xmlns:modeler="http://flowable.org/modeler"><![CDATA[false]]></modeler:initiator-can-complete>
+      </extensionElements>
+    </userTask>
+    <userTask id="thirdNode" name="财务审批" flowable:assignee="${userId}" flowable:formFieldValidation="true">
+      <extensionElements>
+        <modeler:initiator-can-complete xmlns:modeler="http://flowable.org/modeler"><![CDATA[false]]></modeler:initiator-can-complete>
+      </extensionElements>
+    </userTask>
+    <endEvent id="sid-5A128EFE-C7CA-4A46-88A2-E6FBE71F5A13" name="结束"></endEvent>
+    <sequenceFlow id="sid-87B1E7C5-DA62-4AB3-9569-D3DB37EED62F" name="同意" sourceRef="firstNode" targetRef="secondNode"></sequenceFlow>
+    <sequenceFlow id="上级领导审批同意" name="同意" sourceRef="secondNode" targetRef="thirdNode">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${outcome=='同意'}]]></conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="上级领导审批拒绝" name="拒绝" sourceRef="secondNode" targetRef="sid-5A128EFE-C7CA-4A46-88A2-E6FBE71F5A13">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${outcome=='拒绝'}]]></conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="财务审批拒绝" name="拒绝" sourceRef="thirdNode" targetRef="sid-5A128EFE-C7CA-4A46-88A2-E6FBE71F5A13">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${outcome=='拒绝'}]]></conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="财务审批同意" name="同意" sourceRef="thirdNode" targetRef="sid-5A128EFE-C7CA-4A46-88A2-E6FBE71F5A13">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${outcome=='同意'}]]></conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="财务审批驳回" name="驳回" sourceRef="thirdNode" targetRef="secondNode">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${outcome=='驳回'}]]></conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="上级领导审批驳回" name="驳回" sourceRef="secondNode" targetRef="firstNode">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${outcome=='驳回'}]]></conditionExpression>
+    </sequenceFlow>
+  </process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_expanse">
+    <bpmndi:BPMNPlane bpmnElement="expanse" id="BPMNPlane_expanse">
+      <bpmndi:BPMNShape bpmnElement="sid-734E5CED-7DDA-4352-8C3F-438AFDF4CD0E" id="BPMNShape_sid-734E5CED-7DDA-4352-8C3F-438AFDF4CD0E">
+        <omgdc:Bounds height="30.0" width="30.0" x="172.0" y="231.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="firstNode" id="BPMNShape_firstNode">
+        <omgdc:Bounds height="80.0" width="100.0" x="247.0" y="206.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="secondNode" id="BPMNShape_secondNode">
+        <omgdc:Bounds height="80.0" width="100.0" x="390.0" y="206.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="thirdNode" id="BPMNShape_thirdNode">
+        <omgdc:Bounds height="80.0" width="100.0" x="537.0" y="206.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="sid-5A128EFE-C7CA-4A46-88A2-E6FBE71F5A13" id="BPMNShape_sid-5A128EFE-C7CA-4A46-88A2-E6FBE71F5A13">
+        <omgdc:Bounds height="28.0" width="28.0" x="682.0" y="232.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="财务审批同意" id="BPMNEdge_财务审批同意">
+        <omgdi:waypoint x="636.949999999996" y="246.0"></omgdi:waypoint>
+        <omgdi:waypoint x="682.0" y="246.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sid-0BF6A4F0-72D8-4246-AD09-66E8F9A02237" id="BPMNEdge_sid-0BF6A4F0-72D8-4246-AD09-66E8F9A02237">
+        <omgdi:waypoint x="201.94999848995764" y="246.0"></omgdi:waypoint>
+        <omgdi:waypoint x="246.9999999999917" y="246.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="财务审批驳回" id="BPMNEdge_财务审批驳回">
+        <omgdi:waypoint x="586.1724137931035" y="206.0"></omgdi:waypoint>
+        <omgdi:waypoint x="539.0" y="149.0"></omgdi:waypoint>
+        <omgdi:waypoint x="466.21206896551723" y="206.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="上级领导审批同意" id="BPMNEdge_上级领导审批同意">
+        <omgdi:waypoint x="489.9499999998746" y="246.0"></omgdi:waypoint>
+        <omgdi:waypoint x="536.9999999999955" y="246.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="上级领导审批驳回" id="BPMNEdge_上级领导审批驳回">
+        <omgdi:waypoint x="438.92057188244644" y="206.0"></omgdi:waypoint>
+        <omgdi:waypoint x="372.0" y="144.0"></omgdi:waypoint>
+        <omgdi:waypoint x="298.13095238095235" y="206.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sid-87B1E7C5-DA62-4AB3-9569-D3DB37EED62F" id="BPMNEdge_sid-87B1E7C5-DA62-4AB3-9569-D3DB37EED62F">
+        <omgdi:waypoint x="346.95000000000005" y="246.0"></omgdi:waypoint>
+        <omgdi:waypoint x="390.0" y="246.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="上级领导审批拒绝" id="BPMNEdge_上级领导审批拒绝">
+        <omgdi:waypoint x="440.0" y="285.95000000000005"></omgdi:waypoint>
+        <omgdi:waypoint x="440.0" y="396.0"></omgdi:waypoint>
+        <omgdi:waypoint x="696.0" y="396.0"></omgdi:waypoint>
+        <omgdi:waypoint x="696.0" y="259.9499278013017"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="财务审批拒绝" id="BPMNEdge_财务审批拒绝">
+        <omgdi:waypoint x="587.0" y="285.95000000000005"></omgdi:waypoint>
+        <omgdi:waypoint x="587.0" y="334.0"></omgdi:waypoint>
+        <omgdi:waypoint x="685.1065761792173" y="254.7632811812439"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>
