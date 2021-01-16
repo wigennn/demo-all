@@ -31,14 +31,14 @@ public class ExpenseController {
     }
 
     @RequestMapping("/list")
-    public Object list(String uid) {
-        return processService.getTasks(uid);
+    public Object list(String userId) {
+        return processService.getTasks(userId);
     }
 
     @RequestMapping("/apply")
     public String apply(String taskId) {
         Map<String, Object> map = new HashMap<>();
-        map.put("outcome", "");
+        map.put("outcome", "同意");
         processService.operation(taskId, map);
         return "apply success!";
     }

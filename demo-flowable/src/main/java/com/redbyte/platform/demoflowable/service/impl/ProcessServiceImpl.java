@@ -50,19 +50,19 @@ public class ProcessServiceImpl implements ProcessService {
     }
 
     @Override
-    public List<Task> getTasks(String assignee) {
+    public List<Task> getTasks(String userId) {
         System.out.println("Number of process definitions : "
                 + repositoryService.createProcessDefinitionQuery().count());
         System.out.println("Number of tasks : " + taskService.createTaskQuery().count());
-        runtimeService.startProcessInstanceByKey("oneTaskProcess");
-        System.out.println("Number of tasks after process start: "
-                + taskService.createTaskQuery().count());
-        return taskService.createTaskQuery().taskAssignee(assignee).list();
+        runtimeService.startProcessInstanceByKey("expanse");
+//        System.out.println("Number of tasks after process start: "
+//                + taskService.createTaskQuery().taskAssignee(userId).count());
+        return taskService.createTaskQuery().taskUnassigned().list();
     }
 
     @Override
     public String operation(String taskId, Map<String, Object> map) {
         taskService.complete(taskId, map);
-        return null;
+        return "complete success!";
     }
 }
